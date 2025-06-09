@@ -127,3 +127,9 @@
   --shadow-actions-secondary-hover: var(--shadow-actions-secondary-hover);
   --shadow-actions-secondary-active: var(--shadow-actions-secondary-active);
 }
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+}

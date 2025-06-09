@@ -5,7 +5,7 @@ export default function Home() {
   return (
     <div className="mx-auto mt-20 h-screen w-full max-w-4xl px-4">
       {/* Heading  */}
-      <div className="border-b-foreground/10 flex flex-col border-b-2 pb-16">
+      <div className="flex flex-col border-b-2 pb-16">
         <h1 className="mt-20 text-5xl font-semibold">From the blog</h1>
         <p className="text-foreground/70 mt-4">
           Learn how to grow your business with our expert advice.

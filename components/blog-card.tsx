@@ -25,7 +25,7 @@ export function BlogCard({ blog }: BlogCardProps) {
           <span className="text-foreground/50 text-sm font-semibold">
             {blog.date}
           </span>
-          <Badge variant="outline" className="bg-muted border-foreground/20">
+          <Badge variant="outline" className="bg-muted">
             {blog.tag}
           </Badge>
         </div>
