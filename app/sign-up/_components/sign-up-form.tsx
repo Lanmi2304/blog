@@ -58,6 +58,8 @@ export default function SignUp({
     },
   });
 
+  console.log(process.env.NODE_ENV);
+
   async function onSubmit({
     email,
     password,
