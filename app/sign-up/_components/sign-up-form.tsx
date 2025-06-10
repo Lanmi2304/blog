@@ -75,7 +75,8 @@ export default function SignUp({
           toast.error(ctx.error.message);
         },
         onSuccess: async () => {
-          router.push("/dashboard");
+          // temporary
+          toast.success("Successfully created Account");
         },
       },
     });
