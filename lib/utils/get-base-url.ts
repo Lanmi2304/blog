@@ -12,11 +12,11 @@ export function getBaseUrl(): string {
       return "http://localhost:3000";
     case "production":
       if (!PROD_URL) {
-        throw new Error(
+        console.log(
           "APP_URL environment variable is not defined in production",
         );
       }
-      return PROD_URL;
+      return PROD_URL!;
     default:
       return "http://localhost:3000"; // Fallback to development URL
   }
