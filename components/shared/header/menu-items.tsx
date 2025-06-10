@@ -14,7 +14,7 @@ import { Rss } from "lucide-react";
 export const navItems = [
   { title: "Posts", href: "/" },
   { title: "Login", href: "/login" },
-  { title: "Create Account", href: "/create-account" },
+  { title: "Sign Up", href: "/sign-up" },
 ];
 
 export function MobileMenuItems() {

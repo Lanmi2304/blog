@@ -4,6 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import { TailwindIndicator } from "@/components/tailwind-indicator";
 import { Header } from "@/components/shared/header/header";
+import { Toaster } from "@/components/ui/sonner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -37,6 +38,8 @@ export default function RootLayout({
         >
           <Header />
           {children}
+
+          <Toaster />
           <TailwindIndicator />
         </ThemeProvider>
       </body>
