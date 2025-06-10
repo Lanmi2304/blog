@@ -77,6 +77,7 @@ export default function SignUp({
         onSuccess: async () => {
           // temporary
           toast.success("Successfully created Account");
+          form.reset();
         },
       },
     });
