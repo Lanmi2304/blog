@@ -1,13 +1,11 @@
-import { DesktopMenuItems, MobileMenu } from "./menu-items";
 import { NavigationMenu } from "@/components/ui/navigation-menu";
+import { MenuItems } from "./menu-items";
 
 export function Header() {
   return (
     <header className="bg-background/50 fixed top-0 left-[50%] z-50 flex h-20 w-full max-w-4xl shrink-0 translate-x-[-50%] transform items-center border-b backdrop-blur-md md:px-6">
-      <MobileMenu />
-
-      <NavigationMenu className="hidden lg:flex">
-        <DesktopMenuItems />
+      <NavigationMenu className="flex">
+        <MenuItems />
       </NavigationMenu>
     </header>
   );

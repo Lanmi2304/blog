@@ -18,6 +18,6 @@ export function getBaseUrl(): string {
       }
       return PROD_URL!;
     default:
-      return "http://localhost:3000"; // Fallback to development URL
+      return "http://localhost:3000";
   }
 }
