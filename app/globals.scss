@@ -1,6 +1,7 @@
 @use "tailwindcss";
 @use "./../rich-text-styles/keyframe-animations";
 @use "./../rich-text-styles/variables";
+@plugin "@tailwindcss/typography";
 
 :root {
   --radius: 0.65rem;

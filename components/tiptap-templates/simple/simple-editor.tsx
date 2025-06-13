@@ -3,6 +3,20 @@
 import * as React from "react";
 import { EditorContent, EditorContext, useEditor } from "@tiptap/react";
 
+import Document from "@tiptap/extension-document";
+import Paragraph from "@tiptap/extension-paragraph";
+import Text from "@tiptap/extension-text";
+import Bold from "@tiptap/extension-bold";
+import Heading from "@tiptap/extension-heading";
+import Italic from "@tiptap/extension-italic";
+import CodeBlock from "@tiptap/extension-code-block";
+import Code from "@tiptap/extension-code";
+import Strike from "@tiptap/extension-strike";
+import BlockQuote from "@tiptap/extension-blockquote";
+import ListItem from "@tiptap/extension-list-item";
+import BulletList from "@tiptap/extension-bullet-list";
+import HorizontalRule from "@tiptap/extension-horizontal-rule";
+
 // --- Tiptap Core Extensions ---
 import { StarterKit } from "@tiptap/starter-kit";
 import { Image } from "@tiptap/extension-image";
@@ -14,6 +28,10 @@ import { Highlight } from "@tiptap/extension-highlight";
 import { Subscript } from "@tiptap/extension-subscript";
 import { Superscript } from "@tiptap/extension-superscript";
 import { Underline } from "@tiptap/extension-underline";
+
+import Markdown from "react-markdown";
+import TurndownService from "turndown";
+import remarkGfm from "remark-gfm";
 
 // --- Custom Extensions ---
 import { Link } from "@/components/tiptap-extension/link-extension";
@@ -78,6 +96,7 @@ import "@/components/tiptap-templates/simple/simple-editor.scss";
 // !Content
 import content from "@/components/tiptap-templates/simple/data/content.json";
 import { cn } from "@/lib/utils/cn";
+import { generateHTML } from "@tiptap/html";
 
 const MainToolbarContent = ({
   onHighlighterClick,
@@ -221,8 +240,43 @@ export function SimpleEditor() {
       TrailingNode,
       Link.configure({ openOnClick: false }),
     ],
-    content,
+    content: "",
   });
+
+  const output = React.useMemo(() => {
+    return generateHTML(content, [
+      Document,
+      Paragraph,
+      Text,
+      Bold,
+      Heading,
+      Italic,
+      Highlight,
+      Link,
+      CodeBlock,
+      Code,
+      BlockQuote,
+      Strike,
+      Image,
+      Superscript,
+      Subscript,
+      Underline,
+      Typography,
+      ListItem,
+      TextAlign,
+      BulletList,
+      HorizontalRule,
+      TaskItem,
+      TaskList,
+
+      // other extensions …
+    ]);
+  }, [content]);
+
+  const turndownService = new TurndownService();
+  const markdown = turndownService.turndown(output);
+
+  console.log(markdown);
 
   // const bodyRect = useCursorVisibility({
   //   editor,
@@ -262,15 +316,22 @@ export function SimpleEditor() {
         )}
       </Toolbar>
 
-      <div className="content-wrapper">
+      <div
+        className={cn(
+          "content-wrapper relative top-10",
+          isMobile ? "top-20" : null,
+        )}
+      >
+        <h2 className="mb-4">Blog Content</h2>
         <EditorContent
           editor={editor}
           role="presentation"
-          className={cn(
-            "simple-editor-content bg-muted relative top-10 rounded-xl",
-            isMobile ? "top-20" : null,
-          )}
+          className="simple-editor-content bg-muted rounded-xl"
         />
+
+        <div className="prose">
+          <Markdown remarkPlugins={[remarkGfm]}>{markdown}</Markdown>
+        </div>
       </div>
     </EditorContext.Provider>
   );
