@@ -27,7 +27,7 @@ body,
 }
 
 body {
-  overflow: hidden;
+  overflow-x: hidden;
 }
 
 .tiptap.ProseMirror {
@@ -35,8 +35,7 @@ body {
 }
 
 .content-wrapper {
-  height: calc(100% - var(--tt-toolbar-height));
-  overflow-y: auto;
+  height: auto;
 
   &::-webkit-scrollbar {
     display: block;
@@ -58,7 +57,7 @@ body {
 }
 
 .simple-editor-content {
-  max-width: 640px;
+  max-width: 896px;
   width: 100%;
   margin: 0 auto;
 }
