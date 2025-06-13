@@ -1,6 +1,6 @@
-@import "tailwindcss";
-@import "./../rich-text-styles/keyframe-animations";
-@import "./../rich-text-styles/variables";
+@use "tailwindcss";
+@use "./../rich-text-styles/keyframe-animations";
+@use "./../rich-text-styles/variables";
 
 :root {
   --radius: 0.65rem;
