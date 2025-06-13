@@ -11,6 +11,8 @@ import { Rss } from "lucide-react";
 
 export const navItems = [
   { title: "Posts", href: "/" },
+  // TODO: Temp Link
+  { title: "Add Blog", href: "/add-blog" },
   { title: "Login", href: "/login" },
   { title: "Sign Up", href: "/sign-up" },
 ];
