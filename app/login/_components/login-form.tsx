@@ -27,7 +27,6 @@ import { authClient } from "@/lib/auth-client";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
 
-// TODO: Replace with react hook
 
 export function LoginForm({
   className,
@@ -132,7 +131,7 @@ export function LoginForm({
                           </a>
                         </div>
                         <FormControl>
-                          <Input {...field} />
+                          <Input type="password" {...field} />
                         </FormControl>
                         <FormMessage className="absolute -bottom-5" />
                       </FormItem>
