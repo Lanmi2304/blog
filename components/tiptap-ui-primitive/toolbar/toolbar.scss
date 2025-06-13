@@ -50,9 +50,11 @@
     }
 
     @media (max-width: 480px) {
-      position: fixed;
+      position: sticky;
+      overflow-x: scroll;
+      max-width: 300px;
       top: auto;
-      bottom: 0;
+      // bottom: 0;
       height: calc(var(--tt-toolbar-height) + var(--tt-safe-area-bottom));
       border-top: 1px solid var(--tt-toolbar-border-color);
       border-bottom: none;
@@ -79,7 +81,7 @@
     background-color: var(--tt-toolbar-bg-color);
     box-shadow: var(--tt-shadow-elevated-md);
     outline: none;
-    overflow: hidden;
+    overflow-x: scroll;
 
     &[data-plain="true"] {
       padding: 0;

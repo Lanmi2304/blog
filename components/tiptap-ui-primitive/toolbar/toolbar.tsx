@@ -262,7 +262,7 @@ const useSeparatorVisibility = (
 };
 
 export const Toolbar = React.forwardRef<HTMLDivElement, ToolbarProps>(
-  ({ children, className, variant = "fixed", ...props }, ref) => {
+  ({ children, className, variant = "floating", ...props }, ref) => {
     const toolbarRef = React.useRef<HTMLDivElement>(null);
     const isVisible = useToolbarVisibility(toolbarRef);
 

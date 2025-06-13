@@ -243,6 +243,9 @@ export function SimpleEditor() {
     content: "",
   });
 
+  const json = editor?.getJSON();
+  console.log(111, json);
+
   const output = React.useMemo(() => {
     return generateHTML(content, [
       Document,
@@ -291,46 +294,43 @@ export function SimpleEditor() {
 
   return (
     <EditorContext.Provider value={{ editor }}>
-      <Toolbar
-        className="sticky top-20 mx-auto max-w-4xl!"
-        ref={toolbarRef}
-        style={
-          isMobile
-            ? {
-                top: "90px",
-              }
-            : {}
-        }
-      >
-        {mobileView === "main" ? (
-          <MainToolbarContent
-            onHighlighterClick={() => setMobileView("highlighter")}
-            onLinkClick={() => setMobileView("link")}
-            isMobile={isMobile}
-          />
-        ) : (
-          <MobileToolbarContent
-            type={mobileView === "highlighter" ? "highlighter" : "link"}
-            onBack={() => setMobileView("main")}
-          />
-        )}
-      </Toolbar>
+      <h2 className="my-4">Blog Content</h2>
+      <div className="relative">
+        <Toolbar
+          className="absolute top-0 mx-auto max-w-4xl!"
+          ref={toolbarRef}
+          // style={
+          //   isMobile
+          //     ? {
+          //         top: "90px",
+          //       }
+          //     : {}
+          // }
+        >
+          {mobileView === "main" ? (
+            <MainToolbarContent
+              onHighlighterClick={() => setMobileView("highlighter")}
+              onLinkClick={() => setMobileView("link")}
+              isMobile={isMobile}
+            />
+          ) : (
+            <MobileToolbarContent
+              type={mobileView === "highlighter" ? "highlighter" : "link"}
+              onBack={() => setMobileView("main")}
+            />
+          )}
+        </Toolbar>
 
-      <div
-        className={cn(
-          "content-wrapper relative top-10",
-          isMobile ? "top-20" : null,
-        )}
-      >
-        <h2 className="mb-4">Blog Content</h2>
-        <EditorContent
-          editor={editor}
-          role="presentation"
-          className="simple-editor-content bg-muted rounded-xl"
-        />
+        <div className={cn("content-wrapper relative top-10")}>
+          <EditorContent
+            editor={editor}
+            role="presentation"
+            className="simple-editor-content bg-muted rounded-xl"
+          />
 
-        <div className="prose">
-          <Markdown remarkPlugins={[remarkGfm]}>{markdown}</Markdown>
+          <div className="prose mt-10">
+            <Markdown remarkPlugins={[remarkGfm]}>{markdown}</Markdown>
+          </div>
         </div>
       </div>
     </EditorContext.Provider>
