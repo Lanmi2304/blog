@@ -7,7 +7,7 @@ import {
 } from "@/components/ui/navigation-menu";
 import { cn } from "@/lib/utils/cn";
 import { usePathname } from "next/navigation";
-import { LockIcon, LogOutIcon, Rss, UserIcon } from "lucide-react";
+import { LockIcon, LogOutIcon, Plus, Rss, UserIcon } from "lucide-react";
 import { createAuthClient } from "better-auth/react";
 
 import { Button } from "@/components/ui/button";
@@ -80,53 +80,61 @@ export function MenuItems() {
             </Link>
           </NavigationMenuLink>
 
-          <DropdownMenu modal={false}>
-            <DropdownMenuTrigger asChild>
-              <Button
-                variant="ghost"
-                size="icon"
-                className="cursor-pointer rounded-full"
-              >
-                {data.user.image && (
-                  <Avatar className="h-9 w-9">
-                    <AvatarImage src={data.user.image} alt="User avatar" />
-                    <AvatarFallback>
-                      {data.user.name.slice(0, 1)}
-                    </AvatarFallback>
-                  </Avatar>
-                )}
+          <div className="flex items-center gap-4">
+            <Button asChild className="cursor-pointer rounded-full">
+              <Link href="/add-blog" className="flex items-center">
+                <Plus />
+                <span>Blog</span>
+              </Link>
+            </Button>
+            <DropdownMenu modal={false}>
+              <DropdownMenuTrigger asChild>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="cursor-pointer rounded-full"
+                >
+                  {data.user.image && (
+                    <Avatar className="h-9 w-9">
+                      <AvatarImage src={data.user.image} alt="User avatar" />
+                      <AvatarFallback>
+                        {data.user.name.slice(0, 1)}
+                      </AvatarFallback>
+                    </Avatar>
+                  )}
 
-                {!data.user.image && (
-                  <Avatar className="h-9 w-9">
-                    <AvatarImage
-                      src="/images/avatar-placeholder.png"
-                      alt="User avatar"
-                    />
-                    <AvatarFallback>
-                      {data.user.name.slice(0, 1)}
-                    </AvatarFallback>
-                  </Avatar>
-                )}
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent className="text-foreground w-56">
-              <DropdownMenuLabel>My Account</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>
-                <UserIcon />
-                Edit Profile
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <LockIcon />
-                Change Password
-              </DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem className="text-destructive">
-                <LogOutIcon />
-                Logout
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+                  {!data.user.image && (
+                    <Avatar className="h-9 w-9">
+                      <AvatarImage
+                        src="/images/avatar-placeholder.png"
+                        alt="User avatar"
+                      />
+                      <AvatarFallback>
+                        {data.user.name.slice(0, 1)}
+                      </AvatarFallback>
+                    </Avatar>
+                  )}
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="text-foreground w-56">
+                <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem>
+                  <UserIcon />
+                  Edit Profile
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <LockIcon />
+                  Change Password
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem className="text-destructive">
+                  <LogOutIcon />
+                  Logout
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
         </div>
       )}
     </NavigationMenuList>
