@@ -131,6 +131,10 @@
   --shadow-actions-secondary-active: var(--shadow-actions-secondary-active);
 }
 
+nav > div[style*="position:relative"] {
+  width: 100%;
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;

@@ -15,7 +15,6 @@ import Image from "next/image";
 import { Loader2, X } from "lucide-react";
 import { authClient } from "@/lib/auth-client";
 import { toast } from "sonner";
-import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils/cn";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -44,7 +43,6 @@ export default function SignUp({
 }: React.ComponentProps<"div">) {
   const [image, setImage] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
-  const router = useRouter();
 
   const form = useForm<SignUpSchemaInput>({
     resolver: zodResolver(signUpSchema),
@@ -71,7 +69,7 @@ export default function SignUp({
       password,
       name: `${firstName} ${lastName}`,
       image: image ? await convertImageToBase64(image) : "",
-      callbackURL: "/dashboard",
+      callbackURL: "/",
       fetchOptions: {
         onError: (ctx) => {
           toast.error(ctx.error.message);
@@ -79,7 +77,6 @@ export default function SignUp({
         onSuccess: async () => {
           // temporary
           toast.success("Successfully created Account");
-          router.push("/");
         },
       },
     });
