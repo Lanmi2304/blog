@@ -6,10 +6,9 @@ import {
   NavigationMenuList,
 } from "@/components/ui/navigation-menu";
 import { cn } from "@/lib/utils/cn";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { LockIcon, LogOutIcon, Plus, Rss, UserIcon } from "lucide-react";
-import { createAuthClient } from "better-auth/react";
-
+// import { createAuthClient } from "better-auth/react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -20,26 +19,33 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-
-const { useSession } = createAuthClient();
-
+import { authClient } from "@/lib/auth-client";
+import { User } from "better-auth";
 export const navItems = [
   { title: "Posts", href: "/" },
-  // TODO: Temp Link
-  // { title: "Add Blog", href: "/add-blog" },
   { title: "Login", href: "/login" },
   { title: "Sign Up", href: "/sign-up" },
 ];
 
-export function MenuItems() {
+export function MenuItems({ user }: { user?: User }) {
   const pathname = usePathname();
-  const { data } = useSession();
-  console.log(data?.user);
+  const router = useRouter();
+
+  const logoutHandler = async () => {
+    await authClient.signOut({
+      fetchOptions: {
+        onSuccess: () => {
+          router.push("/login");
+          setTimeout(() => router.refresh(), 500);
+        },
+      },
+    });
+  };
 
   return (
     <NavigationMenuList className="flex w-full items-center justify-start gap-6 px-4">
       <Rss className="text-primary size-8" />
-      {!data?.user ? (
+      {!user ? (
         navItems.map((item) => (
           <NavigationMenuLink
             className="w-full"
@@ -94,24 +100,20 @@ export function MenuItems() {
                   size="icon"
                   className="cursor-pointer rounded-full"
                 >
-                  {data.user.image && (
+                  {user?.image && (
                     <Avatar className="h-9 w-9">
-                      <AvatarImage src={data.user.image} alt="User avatar" />
-                      <AvatarFallback>
-                        {data.user.name.slice(0, 1)}
-                      </AvatarFallback>
+                      <AvatarImage src={user?.image} alt="User avatar" />
+                      <AvatarFallback>{user?.name.slice(0, 1)}</AvatarFallback>
                     </Avatar>
                   )}
 
-                  {!data.user.image && (
+                  {!user?.image && (
                     <Avatar className="h-9 w-9">
                       <AvatarImage
                         src="/images/avatar-placeholder.png"
                         alt="User avatar"
                       />
-                      <AvatarFallback>
-                        {data.user.name.slice(0, 1)}
-                      </AvatarFallback>
+                      <AvatarFallback>{user?.name.slice(0, 1)}</AvatarFallback>
                     </Avatar>
                   )}
                 </Button>
@@ -128,7 +130,10 @@ export function MenuItems() {
                   Change Password
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem className="text-destructive">
+                <DropdownMenuItem
+                  onClick={logoutHandler}
+                  className="text-destructive"
+                >
                   <LogOutIcon />
                   Logout
                 </DropdownMenuItem>
