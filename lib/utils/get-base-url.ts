@@ -4,20 +4,9 @@
  * @throws {Error} If APP_URL is not defined in production
  */
 export function getBaseUrl(): string {
-  const ENV = process.env.NODE_ENV || "development";
-  const PROD_URL = process.env.APP_URL;
-
-  switch (ENV) {
-    case "development":
-      return "http://localhost:3000";
-    case "production":
-      if (!PROD_URL) {
-        console.log(
-          "APP_URL environment variable is not defined in production",
-        );
-      }
-      return PROD_URL!;
-    default:
-      return "http://localhost:3000";
+  if (process.env.NODE_ENV === "production") {
+    return process.env.APP_URL!;
+  } else {
+    return "http://localhost:3000";
   }
 }
