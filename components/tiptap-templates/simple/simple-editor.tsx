@@ -3,19 +3,19 @@
 import * as React from "react";
 import { EditorContent, EditorContext, useEditor } from "@tiptap/react";
 
-import Document from "@tiptap/extension-document";
-import Paragraph from "@tiptap/extension-paragraph";
-import Text from "@tiptap/extension-text";
-import Bold from "@tiptap/extension-bold";
-import Heading from "@tiptap/extension-heading";
-import Italic from "@tiptap/extension-italic";
-import CodeBlock from "@tiptap/extension-code-block";
-import Code from "@tiptap/extension-code";
-import Strike from "@tiptap/extension-strike";
-import BlockQuote from "@tiptap/extension-blockquote";
-import ListItem from "@tiptap/extension-list-item";
-import BulletList from "@tiptap/extension-bullet-list";
-import HorizontalRule from "@tiptap/extension-horizontal-rule";
+// import Document from "@tiptap/extension-document";
+// import Paragraph from "@tiptap/extension-paragraph";
+// import Text from "@tiptap/extension-text";
+// import Bold from "@tiptap/extension-bold";
+// import Heading from "@tiptap/extension-heading";
+// import Italic from "@tiptap/extension-italic";
+// import CodeBlock from "@tiptap/extension-code-block";
+// import Code from "@tiptap/extension-code";
+// import Strike from "@tiptap/extension-strike";
+// import BlockQuote from "@tiptap/extension-blockquote";
+// import ListItem from "@tiptap/extension-list-item";
+// import BulletList from "@tiptap/extension-bullet-list";
+// import HorizontalRule from "@tiptap/extension-horizontal-rule";
 
 // --- Tiptap Core Extensions ---
 import { StarterKit } from "@tiptap/starter-kit";
@@ -94,9 +94,9 @@ import { handleImageUpload, MAX_FILE_SIZE } from "@/lib/tiptap-utils";
 import "@/components/tiptap-templates/simple/simple-editor.scss";
 
 // !Content
-import content from "@/components/tiptap-templates/simple/data/content.json";
+// import content from "@/components/tiptap-templates/simple/data/content.json";
 import { cn } from "@/lib/utils/cn";
-import { generateHTML } from "@tiptap/html";
+// import { generateHTML } from "@tiptap/html";
 import { Label } from "@/components/ui/label";
 import { ContentType } from "@/app/add-blog/_components/add-blog-form";
 
