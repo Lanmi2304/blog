@@ -67,7 +67,7 @@ export const verification = pgTable("verification", {
   ),
 });
 
-export const posts = pgTable("posts", {
+export const blogs = pgTable("blogs", {
   id: serial("id").primaryKey(),
   title: text("title").notNull(),
   topic: text("topic").notNull(),
@@ -80,3 +80,5 @@ export const posts = pgTable("posts", {
   createdAt: timestamp("created_at").notNull().defaultNow(),
   updatedAt: timestamp("updated_at").notNull().defaultNow(),
 });
+
+export type InsertBlog = typeof blogs.$inferInsert;

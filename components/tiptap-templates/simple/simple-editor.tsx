@@ -29,9 +29,9 @@ import { Subscript } from "@tiptap/extension-subscript";
 import { Superscript } from "@tiptap/extension-superscript";
 import { Underline } from "@tiptap/extension-underline";
 
-import Markdown from "react-markdown";
-import TurndownService from "turndown";
-import remarkGfm from "remark-gfm";
+// import Markdown from "react-markdown";
+// import TurndownService from "turndown";
+// import remarkGfm from "remark-gfm";
 
 // --- Custom Extensions ---
 import { Link } from "@/components/tiptap-extension/link-extension";
@@ -97,6 +97,8 @@ import "@/components/tiptap-templates/simple/simple-editor.scss";
 import content from "@/components/tiptap-templates/simple/data/content.json";
 import { cn } from "@/lib/utils/cn";
 import { generateHTML } from "@tiptap/html";
+import { Label } from "@/components/ui/label";
+import { ContentType } from "@/app/add-blog/_components/add-blog-form";
 
 const MainToolbarContent = ({
   onHighlighterClick,
@@ -199,9 +201,13 @@ const MobileToolbarContent = ({
   </>
 );
 
-export function SimpleEditor() {
+export function SimpleEditor({
+  setContent,
+}: {
+  setContent: React.Dispatch<React.SetStateAction<ContentType | undefined>>;
+}) {
   const isMobile = useMobile();
-  // const windowSize = useWindowSize();
+
   const [mobileView, setMobileView] = React.useState<
     "main" | "highlighter" | "link"
   >("main");
@@ -244,42 +250,46 @@ export function SimpleEditor() {
   });
 
   const json = editor?.getJSON();
-  console.log(111, json);
+  console.log(222, json);
 
-  const output = React.useMemo(() => {
-    return generateHTML(content, [
-      Document,
-      Paragraph,
-      Text,
-      Bold,
-      Heading,
-      Italic,
-      Highlight,
-      Link,
-      CodeBlock,
-      Code,
-      BlockQuote,
-      Strike,
-      Image,
-      Superscript,
-      Subscript,
-      Underline,
-      Typography,
-      ListItem,
-      TextAlign,
-      BulletList,
-      HorizontalRule,
-      TaskItem,
-      TaskList,
+  // const output = React.useMemo(() => {
+  //   return generateHTML(content, [
+  //     Document,
+  //     Paragraph,
+  //     Text,
+  //     Bold,
+  //     Heading,
+  //     Italic,
+  //     Highlight,
+  //     Link,
+  //     CodeBlock,
+  //     Code,
+  //     BlockQuote,
+  //     Strike,
+  //     Image,
+  //     Superscript,
+  //     Subscript,
+  //     Underline,
+  //     Typography,
+  //     ListItem,
+  //     TextAlign,
+  //     BulletList,
+  //     HorizontalRule,
+  //     TaskItem,
+  //     TaskList,
 
-      // other extensions …
-    ]);
-  }, [content]);
+  //     // other extensions …
+  //   ]);
+  // }, []);
 
-  const turndownService = new TurndownService();
-  const markdown = turndownService.turndown(output);
-
-  console.log(markdown);
+  React.useEffect(() => {
+    const json = editor?.getJSON();
+    if (json && json.type) {
+      setContent(json as ContentType);
+    }
+  }, [editor, setContent]);
+  // const turndownService = new TurndownService();
+  // const markdown = turndownService.turndown(output);
 
   // const bodyRect = useCursorVisibility({
   //   editor,
@@ -294,19 +304,9 @@ export function SimpleEditor() {
 
   return (
     <EditorContext.Provider value={{ editor }}>
-      <h2 className="my-4">Blog Content</h2>
-      <div className="relative">
-        <Toolbar
-          className="absolute top-0 mx-auto max-w-4xl!"
-          ref={toolbarRef}
-          // style={
-          //   isMobile
-          //     ? {
-          //         top: "90px",
-          //       }
-          //     : {}
-          // }
-        >
+      <Label className="my-4">Blog Content</Label>
+      <div className="relative -top-8">
+        <Toolbar className="absolute top-0 mx-auto max-w-4xl!" ref={toolbarRef}>
           {mobileView === "main" ? (
             <MainToolbarContent
               onHighlighterClick={() => setMobileView("highlighter")}
@@ -328,9 +328,9 @@ export function SimpleEditor() {
             className="simple-editor-content bg-muted rounded-xl"
           />
 
-          <div className="prose mt-10">
+          {/* <div className="prose mt-10">
             <Markdown remarkPlugins={[remarkGfm]}>{markdown}</Markdown>
-          </div>
+          </div> */}
         </div>
       </div>
     </EditorContext.Provider>

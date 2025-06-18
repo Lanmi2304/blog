@@ -9,7 +9,7 @@ import { z } from "zod";
 class ActionError extends Error {}
 
 // Base client.
-const actionClient = createSafeActionClient({
+export const actionClient = createSafeActionClient({
   defineMetadataSchema() {
     return z.object({
       actionName: z.string(),

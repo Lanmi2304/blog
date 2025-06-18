@@ -32,17 +32,20 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="light"
-          disableTransitionOnChange
-        >
-          <Header />
-          {children}
+        {/* Shadcn component bug prevent */}
+        <div className="w-full overflow-x-hidden">
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="light"
+            disableTransitionOnChange
+          >
+            <Header />
+            {children}
 
-          <Toaster />
-          <TailwindIndicator />
-        </ThemeProvider>
+            <Toaster />
+            <TailwindIndicator />
+          </ThemeProvider>
+        </div>
       </body>
     </html>
   );
