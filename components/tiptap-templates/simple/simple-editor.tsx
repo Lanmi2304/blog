@@ -98,7 +98,7 @@ import "@/components/tiptap-templates/simple/simple-editor.scss";
 import { cn } from "@/lib/utils/cn";
 // import { generateHTML } from "@tiptap/html";
 import { Label } from "@/components/ui/label";
-import { ContentType } from "@/app/add-blog/_components/add-blog-form";
+import { EditorContent as ContentType } from "@/app/add-blog/_components/add-blog-form";
 
 const MainToolbarContent = ({
   onHighlighterClick,
@@ -249,9 +249,6 @@ export function SimpleEditor({
     content: "",
   });
 
-  const json = editor?.getJSON();
-  console.log(222, json);
-
   // const output = React.useMemo(() => {
   //   return generateHTML(content, [
   //     Document,
@@ -283,11 +280,29 @@ export function SimpleEditor({
   // }, []);
 
   React.useEffect(() => {
-    const json = editor?.getJSON();
-    if (json && json.type) {
-      setContent(json as ContentType);
-    }
+    if (!editor) return;
+
+    editor.on("update", ({ editor }) => {
+      const json = editor.getJSON();
+
+      console.log("📤 Editor JSON:", JSON.stringify(json, null, 2));
+
+      if (json && json.type && Array.isArray(json.content)) {
+        setContent({
+          type: json.type,
+          content: json.content
+            .filter((item) => typeof item.type === "string")
+            .map((item) => ({
+              type: item.type as string,
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              content: item.content as any[] | undefined,
+              attrs: item.attrs,
+            })),
+        });
+      }
+    });
   }, [editor, setContent]);
+
   // const turndownService = new TurndownService();
   // const markdown = turndownService.turndown(output);
 

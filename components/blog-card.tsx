@@ -8,11 +8,12 @@ interface BlogCardProps {
   blog: BlogType;
 }
 export function BlogCard({ blog }: BlogCardProps) {
+  console.log(blog);
   return (
     <div className="flex w-full flex-col gap-10 md:flex-row">
       <div className="relative h-80 w-full rounded-xl md:h-auto md:w-1/3">
         <Image
-          src={blog.postImage}
+          src={blog.postImage || ""}
           alt="Blog image"
           fill
           className="absolute inset-0 rounded-xl bg-contain"

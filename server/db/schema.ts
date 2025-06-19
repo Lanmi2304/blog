@@ -74,11 +74,16 @@ export const blogs = pgTable("blogs", {
   content: jsonb("content")
     .$type<{
       type: string;
-      content: Array<{ type: string; content?: Array<unknown> }>;
+      content: Array<{
+        type: string;
+        content?: Array<unknown>;
+        attrs?: Record<string, unknown>;
+      }>;
     }>()
     .notNull(),
   createdAt: timestamp("created_at").notNull().defaultNow(),
   updatedAt: timestamp("updated_at").notNull().defaultNow(),
 });
 
+export type SelectBlog = typeof blogs.$inferSelect;
 export type InsertBlog = typeof blogs.$inferInsert;

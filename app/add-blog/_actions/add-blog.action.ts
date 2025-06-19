@@ -13,10 +13,13 @@ const inputSchema = z.object({
       z.object({
         type: z.string(),
         content: z.array(z.unknown()).optional(),
+        attrs: z.any().optional(),
       }),
     ),
   }),
 });
+
+export type AddBlogInput = z.infer<typeof inputSchema>;
 
 export const addBlogAction = actionClient
   .metadata({ actionName: "addBlogAction" })

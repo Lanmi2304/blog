@@ -1,12 +1,23 @@
 export type BlogType = {
-  date: string;
-  tag: string;
+  date?: string;
+  tag?: string;
+  author?: string;
+  authorImage?: string;
+  role?: string;
+  description?: string;
+  postImage?: string;
   title: string;
-  author: string;
-  authorImage: string;
-  role: string;
-  description: string;
-  postImage: string;
+  content?: {
+    type: string;
+    content: Array<{
+      type: string;
+      content?: Array<unknown>;
+    }>;
+  };
+  topic?: string;
+  id?: number | undefined;
+  createdAt?: Date | undefined;
+  updatedAt?: Date | undefined;
 };
 
 export const blogs: BlogType[] = [

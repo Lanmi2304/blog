@@ -27,13 +27,19 @@ import { AddBlogInputSchema, addBlogSchema } from "../_schemas/add-blog.schema";
 import { addBlogAction } from "../_actions/add-blog.action";
 import { toast } from "sonner";
 
-export type ContentType = {
+export type ContentNode = {
   type: string;
-  content: Array<{ type: string; content?: Array<unknown> }>;
+  content?: ContentNode[];
+  attrs?: Record<string, unknown>;
+};
+
+export type EditorContent = {
+  type: string;
+  content: ContentNode[];
 };
 
 export function AddBlogForm() {
-  const [content, setContent] = useState<ContentType | undefined>();
+  const [content, setContent] = useState<EditorContent | undefined>();
   const form = useForm<AddBlogInputSchema>({
     resolver: zodResolver(addBlogSchema),
     defaultValues: {
@@ -48,14 +54,18 @@ export function AddBlogForm() {
       if (!content) return;
       const blog = {
         ...values,
-        content: { content: content.content, type: content.type },
+        content,
       };
+
+      console.log(111, blog);
       const result = await addBlogAction(blog);
-      if (result.serverError) {
-        toast.error(result.serverError);
+
+      if (result.serverError || result.validationErrors) {
+        toast.error(result.serverError || "An error occurred!");
+      } else {
+        toast.success("Blog successfully created!");
+        form.reset();
       }
-      toast.success("Blog successfully created!");
-      form.reset();
     });
   };
   return (

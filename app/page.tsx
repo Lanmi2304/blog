@@ -1,7 +1,12 @@
 import { BlogCard } from "@/components/blog-card";
-import { blogs } from "@/dummy-data/blogs";
+// import { blogs } from "@/dummy-data/blogs";
+import { getBlogs } from "@/lib/_repositories/get-blogs.repository";
 
-export default function Home() {
+export default async function Home() {
+  const blogsResponse = await getBlogs();
+
+  console.log(blogsResponse);
+
   return (
     <div className="mx-auto mt-10 w-full max-w-4xl px-4">
       {/* Heading  */}
@@ -13,12 +18,17 @@ export default function Home() {
       </div>
       {/* End of heading */}
 
-      {/* Blog list  */}
+      {/* DB blogs */}
       <div className="mt-10 flex flex-col gap-30 pb-20 md:gap-20">
+        {blogsResponse?.map((blog, idx) => <BlogCard key={idx} blog={blog} />)}
+      </div>
+
+      {/* Blog list  */}
+      {/* <div className="mt-10 flex flex-col gap-30 pb-20 md:gap-20">
         {blogs.map((blog, idx) => (
           <BlogCard key={idx} blog={blog} />
         ))}
-      </div>
+      </div> */}
       {/* End of blog list  */}
     </div>
   );
