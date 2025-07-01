@@ -3,6 +3,7 @@ import { Badge } from "./ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import Link from "next/link";
 import { BlogType } from "@/dummy-data/blogs";
+import BlogPlaceholder from "@/public/images/blog-placeholder.webp";
 
 interface BlogCardProps {
   blog: BlogType;
@@ -49,7 +50,7 @@ export function BlogCard({ blog }: BlogCardProps) {
     <div className="flex w-full flex-col gap-10 md:flex-row">
       <div className="relative h-80 w-full rounded-xl bg-cover md:h-auto md:w-1/3">
         <Image
-          src={blog.postImage || displayImage || ""}
+          src={blog.postImage || displayImage || BlogPlaceholder}
           alt="Blog image"
           fill
           className="absolute inset-0 rounded-xl bg-cover"
