@@ -287,19 +287,7 @@ export function SimpleEditor({
 
       console.log("📤 Editor JSON:", JSON.stringify(json, null, 2));
 
-      if (json && json.type && Array.isArray(json.content)) {
-        setContent({
-          type: json.type,
-          content: json.content
-            .filter((item) => typeof item.type === "string")
-            .map((item) => ({
-              type: item.type as string,
-              // eslint-disable-next-line @typescript-eslint/no-explicit-any
-              content: item.content as any[] | undefined,
-              attrs: item.attrs,
-            })),
-        });
-      }
+      setContent(JSON.parse(JSON.stringify(json)));
     });
   }, [editor, setContent]);
 

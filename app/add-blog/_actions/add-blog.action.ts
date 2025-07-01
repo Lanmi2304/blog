@@ -13,7 +13,7 @@ const inputSchema = z.object({
       z.object({
         type: z.string(),
         content: z.array(z.unknown()).optional(),
-        attrs: z.any().optional(),
+        attrs: z.record(z.string(), z.unknown()).optional(),
       }),
     ),
   }),
@@ -25,7 +25,14 @@ export const addBlogAction = actionClient
   .metadata({ actionName: "addBlogAction" })
   .inputSchema(inputSchema)
   .action(async ({ parsedInput: { title, topic, content } }) => {
-    const blog = { title, topic, content };
+    console.log("🟢 RAW parsedInput:", JSON.stringify(content, null, 2));
+    console.log("Logging from action: ", content);
 
-    await addBlog(blog);
+    const cleanContent = JSON.parse(JSON.stringify(content));
+
+    await addBlog({
+      title,
+      topic,
+      content: cleanContent,
+    });
   });
