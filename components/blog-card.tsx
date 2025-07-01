@@ -34,7 +34,7 @@ export function BlogCard({ blog }: BlogCardProps) {
 
   // Description
   const descriptionObject = blog.content?.content.find(
-    (el) => el.type === "paragraph",
+    (el) => el.type === "paragraph" && el.content,
   );
   const displayDescription = (
     descriptionObject?.content as DescriptionType[] | undefined
@@ -73,7 +73,7 @@ export function BlogCard({ blog }: BlogCardProps) {
           <h3 className="peer group-hover:text-muted-foreground text-lg font-bold">
             {blog.title}
           </h3>
-          <p className="text-foreground/60 text-sm font-medium">
+          <p className="text-foreground/60 line-clamp-3 text-sm font-medium">
             {blog.description || displayDescription}
           </p>
         </Link>
