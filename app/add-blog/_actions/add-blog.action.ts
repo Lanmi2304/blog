@@ -7,6 +7,7 @@ import { addBlog } from "../_repositories/add-blog.repository";
 const inputSchema = z.object({
   title: z.string().min(1),
   topic: z.string().min(1),
+  authorImage: z.string().optional(),
   content: z.object({
     type: z.string(),
     content: z.array(
@@ -24,8 +25,8 @@ export type AddBlogInput = z.infer<typeof inputSchema>;
 export const addBlogAction = actionClient
   .metadata({ actionName: "addBlogAction" })
   .inputSchema(inputSchema)
-  .action(async ({ parsedInput: { title, topic, content } }) => {
-    // console.log("🟢 RAW parsedInput:", JSON.stringify(content, null, 2));
+  .action(async ({ parsedInput: { title, topic, content }, ctx: { user } }) => {
+    console.log("USER: ", user);
 
     const cleanContent = JSON.parse(JSON.stringify(content));
     console.log("Logging from action: ", cleanContent);
@@ -34,5 +35,7 @@ export const addBlogAction = actionClient
       title,
       topic,
       content: cleanContent,
+      author: user?.name || "",
+      authorImage: user?.image || "",
     });
   });

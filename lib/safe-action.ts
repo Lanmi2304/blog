@@ -25,24 +25,34 @@ export const actionClient = createSafeActionClient({
     return DEFAULT_SERVER_ERROR_MESSAGE;
   },
   // Define logging middleware.
-}).use(async ({ next, clientInput, metadata }) => {
-  console.log("LOGGING MIDDLEWARE");
+})
+  .use(async ({ next, clientInput, metadata }) => {
+    console.log("LOGGING MIDDLEWARE");
 
-  const startTime = performance.now();
+    const startTime = performance.now();
 
-  // Here we await the action execution.
-  const result = await next();
+    // Here we await the action execution.
+    const result = await next();
 
-  const endTime = performance.now();
+    const endTime = performance.now();
 
-  console.log("Result ->", result);
-  console.log("Client input ->", clientInput);
-  console.log("Metadata ->", metadata);
-  console.log("Action execution took", endTime - startTime, "ms");
+    console.log("Result ->", result);
+    console.log("Client input ->", clientInput);
+    console.log("Metadata ->", metadata);
+    console.log("Action execution took", endTime - startTime, "ms");
 
-  // And then return the result of the awaited action.
-  return result;
-});
+    // And then return the result of the awaited action.
+    return result;
+  })
+  .use(async ({ next }) => {
+    const session = await auth.api.getSession({ headers: await headers() });
+    return next({ ctx: { session } });
+  })
+  .use(async ({ next, ctx }) => {
+    const { session } = ctx; // Context contains `sessionId`
+    const user = session?.user;
+    return next({ ctx: { user } });
+  });
 
 // Auth client defined by extending the base one.
 // Note that the same initialization options and middleware functions of the base client
@@ -58,12 +68,12 @@ export const authActionClient = actionClient
     }
 
     const sessionData = await auth.api.getSession({ headers: await headers() });
-    const userId = sessionData?.user.id;
+    const user = sessionData?.user;
 
-    if (!userId) {
+    if (!user) {
       throw new Error("Session is not valid!");
     }
 
     // Return the next middleware with `userId` value in the context
-    return next({ ctx: { userId } });
+    return next({ ctx: { user } });
   });

@@ -7,16 +7,52 @@ import { BlogType } from "@/dummy-data/blogs";
 interface BlogCardProps {
   blog: BlogType;
 }
+
+interface DescriptionType {
+  text: string;
+  type: "text";
+}
+
+const options: Intl.DateTimeFormatOptions = {
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+};
+
 export function BlogCard({ blog }: BlogCardProps) {
-  console.log(blog);
+  console.log(blog); // TESTING
+
+  // Image
+  const imageObject = blog.content?.content.find(
+    (el) => el.type === "image",
+  ) as {
+    type: string;
+    attrs?: { src?: string };
+  };
+  const displayImage = imageObject?.attrs?.src;
+
+  // Description
+  const descriptionObject = blog.content?.content.find(
+    (el) => el.type === "paragraph",
+  );
+  const displayDescription = (
+    descriptionObject?.content as DescriptionType[] | undefined
+  )?.find((el) => "text" in el)?.text;
+
+  // Date
+  const blogDate = new Date(String(blog.createdAt));
+  const formattedDate = !isNaN(blogDate.getTime())
+    ? new Intl.DateTimeFormat("en-US", options).format(blogDate)
+    : "Invalid Date";
+
   return (
     <div className="flex w-full flex-col gap-10 md:flex-row">
-      <div className="relative h-80 w-full rounded-xl md:h-auto md:w-1/3">
+      <div className="relative h-80 w-full rounded-xl bg-cover md:h-auto md:w-1/3">
         <Image
-          src={blog.postImage || ""}
+          src={blog.postImage || displayImage || ""}
           alt="Blog image"
           fill
-          className="absolute inset-0 rounded-xl bg-contain"
+          className="absolute inset-0 rounded-xl bg-cover"
         />
       </div>
 
@@ -24,10 +60,10 @@ export function BlogCard({ blog }: BlogCardProps) {
         {/* First component */}
         <div className="flex items-center gap-4">
           <span className="text-foreground/50 text-sm font-semibold">
-            {blog.date}
+            {blog.date || formattedDate}
           </span>
           <Badge variant="outline" className="bg-muted">
-            {blog.tag}
+            {blog.tag || blog.topic}
           </Badge>
         </div>
         {/* End of first  component */}
@@ -37,7 +73,7 @@ export function BlogCard({ blog }: BlogCardProps) {
             {blog.title}
           </h3>
           <p className="text-foreground/60 text-sm font-medium">
-            {blog.description}
+            {blog.description || displayDescription}
           </p>
         </Link>
 
@@ -49,9 +85,11 @@ export function BlogCard({ blog }: BlogCardProps) {
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>
 
-          <div className="grid">
+          <div className="flex flex-col items-start justify-center">
             <p className="font-semibold">{blog.author}</p>
-            <p className="text-foreground/60">{blog.role}</p>
+            {blog.role ? (
+              <p className="text-foreground/60">{blog.role}</p>
+            ) : null}
           </div>
         </div>
       </div>

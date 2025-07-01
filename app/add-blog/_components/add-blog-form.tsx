@@ -26,6 +26,7 @@ import { useForm } from "react-hook-form";
 import { AddBlogInputSchema, addBlogSchema } from "../_schemas/add-blog.schema";
 import { addBlogAction } from "../_actions/add-blog.action";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 export type ContentNode = {
   type: string;
@@ -48,6 +49,7 @@ export function AddBlogForm() {
     },
   });
   const [isPending, startTransition] = useTransition();
+  const router = useRouter();
 
   const onSubmit = async (values: AddBlogInputSchema) => {
     startTransition(async () => {
@@ -64,6 +66,7 @@ export function AddBlogForm() {
         toast.error(result.serverError || "An error occurred!");
       } else {
         toast.success("Blog successfully created!");
+        router.push("/");
         form.reset();
       }
     });
@@ -108,6 +111,7 @@ export function AddBlogForm() {
                         <SelectItem value="Marketing">Marketing</SelectItem>
                         <SelectItem value="Sales">Sales</SelectItem>
                         <SelectItem value="Business">Business</SelectItem>
+                        <SelectItem value="Development">Development</SelectItem>
                       </SelectContent>
                     </Select>
                     <FormDescription>

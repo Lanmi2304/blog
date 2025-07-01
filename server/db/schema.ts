@@ -71,6 +71,8 @@ export const blogs = pgTable("blogs", {
   id: serial("id").primaryKey(),
   title: text("title").notNull(),
   topic: text("topic").notNull(),
+  author: text("author").notNull(),
+  authorImage: text("author_image").notNull(),
   content: jsonb("content")
     .$type<{
       type: string;
