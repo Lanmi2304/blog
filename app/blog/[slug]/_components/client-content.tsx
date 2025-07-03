@@ -68,7 +68,7 @@ export function Content({ content }: { content: any }) {
   const turndownService = new TurndownService();
   const markdown = turndownService.turndown(output);
   return (
-    <div className="prose mt-10">
+    <div className="prose mt-10 w-full max-w-none">
       <Markdown remarkPlugins={[remarkGfm]}>{markdown}</Markdown>
     </div>
   );
