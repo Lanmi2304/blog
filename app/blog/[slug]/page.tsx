@@ -20,6 +20,13 @@ export default async function Page({
   };
   const displayImage = imageObject?.attrs?.src;
 
+  const blogContentWithoutImage = blog?.content?.content.filter(
+    (el) => el && el.type !== "image",
+  );
+
+  console.log(blogContentWithoutImage);
+  const blogToPass = { ...blog?.content, content: blogContentWithoutImage };
+
   console.log(123, blog);
   return (
     <div className="mx-auto my-30 w-full max-w-4xl px-4">
@@ -31,7 +38,7 @@ export default async function Page({
           <Image src={ImagePlaceHolder} alt="Blog post image" fill />
         )}
       </div>
-      {blog && blog.content ? <Content content={blog.content} /> : null}
+      {blog ? <Content content={blogToPass} /> : null}
     </div>
   );
 }
