@@ -47,53 +47,55 @@ export function BlogCard({ blog }: BlogCardProps) {
     : "Invalid Date";
 
   return (
-    <div className="flex w-full flex-col gap-10 md:flex-row">
-      <div className="relative h-80 w-full rounded-xl bg-cover md:h-auto md:w-1/3">
-        <Image
-          src={blog.postImage || displayImage || BlogPlaceholder}
-          alt="Blog image"
-          fill
-          className="absolute inset-0 rounded-xl bg-cover"
-        />
-      </div>
-
-      <div className="flex w-full flex-col gap-6 md:w-2/3">
-        {/* First component */}
-        <div className="flex items-center gap-4">
-          <span className="text-foreground/50 text-sm font-semibold">
-            {blog.date || formattedDate}
-          </span>
-          <Badge variant="outline" className="bg-muted">
-            {blog.tag || blog.topic}
-          </Badge>
+    <Link href={`blog/${blog.id}`}>
+      <div className="flex w-full flex-col gap-10 md:flex-row">
+        <div className="relative h-80 w-full rounded-xl bg-cover md:h-auto md:w-1/3">
+          <Image
+            src={blog.postImage || displayImage || BlogPlaceholder}
+            alt="Blog image"
+            fill
+            className="absolute inset-0 rounded-xl bg-cover"
+          />
         </div>
-        {/* End of first  component */}
 
-        <Link href="/" className="group flex flex-col gap-4">
-          <h3 className="peer group-hover:text-muted-foreground text-lg font-bold">
-            {blog.title}
-          </h3>
-          <p className="text-foreground/60 line-clamp-3 text-sm font-medium">
-            {blog.description || displayDescription}
-          </p>
-        </Link>
+        <div className="flex w-full flex-col gap-6 md:w-2/3">
+          {/* First component */}
+          <div className="flex items-center gap-4">
+            <span className="text-foreground/50 text-sm font-semibold">
+              {blog.date || formattedDate}
+            </span>
+            <Badge variant="outline" className="bg-muted">
+              {blog.tag || blog.topic}
+            </Badge>
+          </div>
+          {/* End of first  component */}
 
-        <div className="bg-foreground/10 h-[1px] w-full"></div>
+          <div className="group flex flex-col gap-4">
+            <h3 className="peer group-hover:text-muted-foreground text-lg font-bold">
+              {blog.title}
+            </h3>
+            <p className="text-foreground/60 line-clamp-3 text-sm font-medium">
+              {blog.description || displayDescription}
+            </p>
+          </div>
 
-        <div className="flex gap-3">
-          <Avatar className="size-12">
-            <AvatarImage src={blog.authorImage} />
-            <AvatarFallback>CN</AvatarFallback>
-          </Avatar>
+          <div className="bg-foreground/10 h-[1px] w-full"></div>
 
-          <div className="flex flex-col items-start justify-center">
-            <p className="font-semibold">{blog.author}</p>
-            {blog.role ? (
-              <p className="text-foreground/60">{blog.role}</p>
-            ) : null}
+          <div className="flex gap-3">
+            <Avatar className="size-12">
+              <AvatarImage src={blog.authorImage} />
+              <AvatarFallback>CN</AvatarFallback>
+            </Avatar>
+
+            <div className="flex flex-col items-start justify-center">
+              <p className="font-semibold">{blog.author}</p>
+              {blog.role ? (
+                <p className="text-foreground/60">{blog.role}</p>
+              ) : null}
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 }
