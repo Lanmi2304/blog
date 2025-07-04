@@ -2,11 +2,11 @@ import Image from "next/image";
 import { Badge } from "./ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import Link from "next/link";
-import { BlogType } from "@/dummy-data/blogs";
 import BlogPlaceholder from "@/public/images/blog-placeholder.webp";
+import { SelectBlog } from "@/server/db/schema";
 
 interface BlogCardProps {
-  blog: BlogType;
+  blog: SelectBlog;
 }
 
 interface DescriptionType {
@@ -51,7 +51,7 @@ export function BlogCard({ blog }: BlogCardProps) {
       <div className="flex w-full flex-col gap-10 md:flex-row">
         <div className="relative h-80 w-full rounded-xl bg-cover md:h-auto md:w-1/3">
           <Image
-            src={blog.postImage || displayImage || BlogPlaceholder}
+            src={displayImage || BlogPlaceholder}
             alt="Blog image"
             fill
             className="absolute inset-0 rounded-xl bg-cover"
@@ -62,10 +62,10 @@ export function BlogCard({ blog }: BlogCardProps) {
           {/* First component */}
           <div className="flex items-center gap-4">
             <span className="text-foreground/50 text-sm font-semibold">
-              {blog.date || formattedDate}
+              {formattedDate}
             </span>
             <Badge variant="outline" className="bg-muted">
-              {blog.tag || blog.topic}
+              {blog.topic}
             </Badge>
           </div>
           {/* End of first  component */}
@@ -75,7 +75,7 @@ export function BlogCard({ blog }: BlogCardProps) {
               {blog.title}
             </h3>
             <p className="text-foreground/60 line-clamp-3 text-sm font-medium">
-              {blog.description || displayDescription}
+              {displayDescription}
             </p>
           </div>
 
@@ -89,9 +89,9 @@ export function BlogCard({ blog }: BlogCardProps) {
 
             <div className="flex flex-col items-start justify-center">
               <p className="font-semibold">{blog.author}</p>
-              {blog.role ? (
+              {/* {blog.role ? (
                 <p className="text-foreground/60">{blog.role}</p>
-              ) : null}
+              ) : null} */}
             </div>
           </div>
         </div>

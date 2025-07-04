@@ -1,5 +1,4 @@
 import { BlogCard } from "@/components/blog-card";
-import { blogs } from "@/dummy-data/blogs";
 import { getBlogs } from "@/lib/_repositories/get-blogs.repository";
 
 export default async function Home() {
@@ -22,14 +21,6 @@ export default async function Home() {
       <div className="mt-10 flex flex-col gap-30 pb-20 md:gap-20">
         {blogsResponse?.map((blog, idx) => <BlogCard key={idx} blog={blog} />)}
       </div>
-
-      {/* Blog list  */}
-      <div className="mt-10 flex flex-col gap-30 pb-20 md:gap-20">
-        {blogs.map((blog, idx) => (
-          <BlogCard key={idx} blog={blog} />
-        ))}
-      </div>
-      {/* End of blog list  */}
     </div>
   );
 }
