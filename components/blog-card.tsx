@@ -21,8 +21,6 @@ const options: Intl.DateTimeFormatOptions = {
 };
 
 export function BlogCard({ blog }: BlogCardProps) {
-  console.log(blog); // TESTING
-
   // Image
   const imageObject = blog.content?.content.find(
     (el) => el.type === "image",

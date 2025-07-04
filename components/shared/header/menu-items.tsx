@@ -43,7 +43,7 @@ export function MenuItems({ user }: { user?: User }) {
   };
 
   return (
-    <NavigationMenuList className="flex w-full items-center justify-start gap-6 px-4">
+    <NavigationMenuList className="flex w-full items-center justify-start gap-6">
       <Rss className="text-primary size-8" />
       {!user ? (
         navItems.map((item) => (

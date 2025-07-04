@@ -59,7 +59,7 @@ export function AddBlogForm() {
         content,
       };
 
-      console.log(123, blog);
+      // console.log(123, blog);
       const result = await addBlogAction(blog);
 
       if (result.serverError || result.validationErrors) {

@@ -285,7 +285,7 @@ export function SimpleEditor({
     editor.on("update", ({ editor }) => {
       const json = editor.getJSON();
 
-      console.log("📤 Editor JSON:", JSON.stringify(json, null, 2));
+      // console.log("📤 Editor JSON:", JSON.stringify(json, null, 2));
 
       setContent(JSON.parse(JSON.stringify(json)));
     });

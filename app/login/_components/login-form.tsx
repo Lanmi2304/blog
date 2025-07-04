@@ -55,7 +55,7 @@ export function LoginForm({
       },
       {
         onSuccess: async () => {
-          console.log("Successfully logged in");
+          // console.log("Successfully logged in");
         },
         onError: (ctx) => {
           toast.error(ctx.error.message);

@@ -55,7 +55,6 @@ export default async function Page({
     (el) => el && el.type !== "image",
   );
 
-  console.log(blogContentWithoutImage);
   const content = { ...blog?.content, content: blogContentWithoutImage };
 
   const output = () =>

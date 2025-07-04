@@ -26,10 +26,10 @@ export const addBlogAction = actionClient
   .metadata({ actionName: "addBlogAction" })
   .inputSchema(inputSchema)
   .action(async ({ parsedInput: { title, topic, content }, ctx: { user } }) => {
-    console.log("USER: ", user);
+    // console.log("USER: ", user);
 
     const cleanContent = JSON.parse(JSON.stringify(content));
-    console.log("Logging from action: ", cleanContent);
+    // console.log("Logging from action: ", cleanContent);
 
     await addBlog({
       title,
