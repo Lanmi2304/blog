@@ -28,6 +28,25 @@ import { addBlogAction } from "../_actions/add-blog.action";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 
+const topics = [
+  {
+    value: "development",
+    label: "Development",
+  },
+  {
+    value: "marketing",
+    label: "Marketing",
+  },
+  {
+    value: "business",
+    label: "Business",
+  },
+  {
+    value: "sales",
+    label: "Sales",
+  },
+];
+
 export type ContentNode = {
   type: string;
   content?: ContentNode[];
@@ -107,11 +126,11 @@ export function AddBlogForm() {
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        {/* TODO: Array instead of hardcoded */}
-                        <SelectItem value="Marketing">Marketing</SelectItem>
-                        <SelectItem value="Sales">Sales</SelectItem>
-                        <SelectItem value="Business">Business</SelectItem>
-                        <SelectItem value="Development">Development</SelectItem>
+                        {topics.map((topic) => (
+                          <SelectItem key={topic.value} value={topic.value}>
+                            {topic.label}
+                          </SelectItem>
+                        ))}
                       </SelectContent>
                     </Select>
                     <FormDescription>

@@ -21,19 +21,23 @@ import {
 
 const topics = [
   {
-    value: "Development",
+    value: "all",
+    label: "All",
+  },
+  {
+    value: "development",
     label: "Development",
   },
   {
-    value: "Marketing",
+    value: "marketing",
     label: "Marketing",
   },
   {
-    value: "Business",
+    value: "business",
     label: "Business",
   },
   {
-    value: "Sales",
+    value: "sales",
     label: "Sales",
   },
 ];
@@ -41,7 +45,8 @@ const topics = [
 export function BrowseTopic() {
   const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState("");
-  const [topic, setTopic] = useQueryState("topic");
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [topic, setTopic] = useQueryState("topic", { defaultValue: "" });
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -70,7 +75,11 @@ export function BrowseTopic() {
                   value={topic.value}
                   onSelect={(currentValue) => {
                     setValue(currentValue === value ? "" : currentValue);
-                    setTopic(currentValue === value ? "" : currentValue);
+                    if (currentValue === "all") {
+                      setTopic(null);
+                    } else {
+                      setTopic(currentValue === value ? "" : currentValue);
+                    }
                     setOpen(false);
                   }}
                 >

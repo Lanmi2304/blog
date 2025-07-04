@@ -11,7 +11,11 @@ export function DisplayBlogs({ blogs }: { blogs?: SelectBlog[] }) {
   const filter = searchParams.get("topic");
 
   useEffect(() => {
-    if (!filter) return;
+    if (!filter) {
+      setShowBlogs(blogs);
+      return;
+    }
+
     const filteredBlogs = blogs?.filter((el) => el.topic === filter);
     setShowBlogs(filteredBlogs);
   }, [filter, blogs]);
